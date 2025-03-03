@@ -106,3 +106,63 @@ g = undefined;
 
 - `any` type bilan o'zgaruvchi elon qilish
 - `any` ma'lumot turi har qanday turdagi qiymatni o'z ichiga olishi mumkin bo'lgan universal tur hisoblanadi.
+
+---
+
+## **3-Dars Functions, signature, overload**
+
+```ts
+function pow(x: number, y: number): number {
+  return x ** y;
+}
+
+console.log(pow(10, 3));
+```
+
+- TypeScriptda funksiya elon qilish
+
+```ts
+const add = (x: number, y: number): number => x + y;
+```
+
+- TypeScriptda arrow function elon qilish
+
+```ts
+function log(x: number): void {
+  console.log(x);
+}
+```
+
+- `void` funcsiya elon qilish. hech narsa qaytarmaydigan funksiyaga `void` funksiya deyiladi
+
+```ts
+let c: (x: number, y: string) => string;
+
+c = function (a: number, b: string): string {
+  return `${b}: ${a}`;
+};
+
+console.log(c(2, "Javob"));
+```
+
+- signature funktion elon qilish va undan foydalanish
+- TypeScript'da `function signature` (funksiya imzosi) – bu funksiya qanday argumentlarni qabul qilishi va qanday natija qaytarishini aniq belgilovchi tavsifdir. U funksiyaning bajarilish qismisiz faqat tuzilmasini ifodalaydi.
+
+```ts
+function overloadFunc(x: number, y: number): number;
+function overloadFunc(x: string, y: number): string;
+function overloadFunc(x: any, y: any): any {
+  if (typeof x === "number" && typeof y === "number") {
+    return x + y;
+  } else {
+    return `${x} ${y}`;
+  }
+}
+
+console.log(overloadFunc(1, 3));
+```
+
+- TypeScriptda `overload function` elon qilish
+- `Overloading` yordamida funksiya har xil argumentlarni qabul qila oladi.
+- TypeScript kompilatori qaysi overload'ni ishlatishni avtomatik aniqlaydi.
+- Haqiqiy funksiya esa barcha holatlar uchun umumiy kod yozishga imkon beradi.
