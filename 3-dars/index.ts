@@ -32,14 +32,14 @@
 
 // console.log(c(2, "Javob"));
 
-function overloadFunc(x: number, y: number): number;
-function overloadFunc(x: string, y: number): string;
-function overloadFunc(x: any, y: any): any {
-  if (typeof x === "number" && typeof y === "number") {
-    return x + y;
-  } else {
-    return `${x} ${y}`;
-  }
-}
+// function overloadFunc(x: number, y: number): number;
+// function overloadFunc(x: string, y: number): string;
+// function overloadFunc(x: any, y: any): any {
+//   if (typeof x === "number" && typeof y === "number") {
+//     return x + y;
+//   } else {
+//     return `${x} ${y}`;
+//   }
+// }
 
-console.log(overloadFunc(1, 3));
+// console.log(overloadFunc(1, 3));

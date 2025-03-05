@@ -166,3 +166,54 @@ console.log(overloadFunc(1, 3));
 - `Overloading` yordamida funksiya har xil argumentlarni qabul qila oladi.
 - TypeScript kompilatori qaysi overload'ni ishlatishni avtomatik aniqlaydi.
 - Haqiqiy funksiya esa barcha holatlar uchun umumiy kod yozishga imkon beradi.
+
+---
+
+## **4-Dars Tiplarni o'zgartirish va birlashtirish (1-qism)**
+
+```ts
+let c: unknown = 20;
+let e: number = <number>c;
+let f: number = c as number;
+```
+
+- `let c: unknown = 20;`
+  - `c` o'zgaruvchisi `unknown` turiga ega.
+  - `unknown` — bu `any` ga o‘xshash, lekin ancha xavfsizroq bo‘lgan tur. U istalgan turdagi qiymatni qabul qilishi mumkin, lekin to‘g‘ridan-to‘g‘ri boshqa turlarga o‘tkazib bo‘lmaydi.
+- `let e: number = <number>c;`
+  - Bu yerda type assertion ishlatilgan: `<number>c`
+  - `c` hozircha `unknown`, lekin biz uni `number` sifatida ishlatmoqchimiz.
+  - `<number>c` sintaksisi TypeScriptdagi eski style type assertion bo‘lib, bu `c` ni `number` sifatida tasdiqlaydi.
+  - Agar `c` aslida `number` bo‘lsa, hech qanday muammo bo‘lmaydi. Ammo noto‘g‘ri bo‘lsa, runtime xatolik berishi mumkin.
+- `let f: number = c as number;`
+  - Bu ham type assertion, lekin bu yerda `<number>c` o‘rniga `as number` sintaksisi ishlatilgan.
+  - `as` sintaksisi TypeScript-ning yangi versiyalarida tavsiya etiladi, chunki u `JSX` bilan ham mos keladi.
+
+```ts
+let h: number | string = 10;
+h = "string";
+```
+
+- Bu yerda bir o'zgaruvchiga 2 xil tip berilyapdi shu o'zgaruvchi ham `string` bilan ham `number` bilan ishlay oladi
+
+```ts
+let s: "sm" | "md" | "lg";
+s = "lg";
+```
+
+- bunday holda faqat `s` o'zgaruvchisiga berilgan tiplarni qiymat sifatida ishlatish mumkin hattoki boshqa `string` ham berib bo'lmaydi
+
+```ts
+type Sizes = "SM" | "MD" | "LG" | boolean;
+
+let s2: Sizes = "LG";
+s2 = "MD";
+s2 = "SM";
+
+let s3: Sizes = false;
+
+s3 = "MD";
+```
+
+- Bir marta `type` elon qilib o'zgaruvchilarda undan foydalanish
+- `Type` ga istalgan malumot turi ishlatish mumkin
