@@ -217,3 +217,157 @@ s3 = "MD";
 
 - Bir marta `type` elon qilib o'zgaruvchilarda undan foydalanish
 - `Type` ga istalgan malumot turi ishlatish mumkin
+
+---
+
+## **4-Dars Tiplarni o'zgartirish va birlashtirish (2-qism)**
+
+```tsx
+type OBJ = { name: string } | { age: number };
+
+let obj: OBJ = { name: "str" };
+obj = { age: 23 };
+obj = { name: "sdsd" };
+```
+
+Bu kodda `OBJ` `union type` sifatida `{ name: string }` yoki `{ age: number } `obyektlarini qabul qiladi, lekin ikkalasini birga emas. Shu sababli, `obj` ga faqat bitta variantni o‘rnatish mumkin, `{ name: "str" }` yoki `{ age: 23 }`, lekin `{ name: "str", age: 23 }` xatolik beradi.
+
+```ts
+type OBJ2 = { name: string } & { age: number };
+let obj2: OBJ2;
+obj2 = { name: "Muhriddin", age: 23 };
+obj2 = { name: "str" };
+obj2 = { age: 12 };
+```
+
+Bu kodda `OBJ2` `intersection type` `(&)` bo‘lgani uchun obyekt ikkala propertyga `(name va age)` ega bo‘lishi shart. Shu sababli, `{ name: "Muhriddin", age: 23 }` to‘g‘ri ishlaydi, lekin `{ name: "str" }` yoki `{ age: 12 }` xatolik beradi.
+
+```tsx
+type OBJ3 = { name: string; age?: number };
+
+let obj3: OBJ3 = { name: "Muhriddin" };
+obj3 = { name: "Muhriddin", age: 20 };
+obj3 = { age: 20 };
+```
+
+Bu kodda `name` majburiy, `age` esa ixtiyoriy `(?)`. Shu sababli, `{ name: "Muhriddin" }` yoki `{ name: "Muhriddin", age: 20 }` to‘g‘ri, lekin `{ age: 20 }` xato beradi, chunki `name` bo‘lishi shart.
+
+```tsx
+type OBJ3 = { name: string; age?: number };
+
+let obj3: OBJ3 = { name: "Muhriddin" };
+if ("age" in obj3) {
+  console.log("Mavjud");
+} else {
+  console.log("Mavjud emas");
+}
+```
+
+Bu kodda `age` xususiyati ixtiyoriy `(?)`, shuning uchun `"age"` in `obj3` orqali `age` mavjudligini tekshiryapti. Agar age bo‘lsa "Mavjud", aks holda "Mavjud emas" chiqadi.
+
+---
+
+## **5-Dars Massivlar(arrays, tuples, enums) (1-qism)**
+
+```ts
+let b: number[] = [1, 2, 3, 4];
+b = [232, 54545];
+b = ["sdf", true];
+```
+
+- `let b: number[] = [1, 2, 3, 4];`
+
+  - `b` nomli o‘zgaruvchi e'lon qilinmoqda va unga faqat raqamlar (`number[]` tipi) saqlovchi massiv (`array`) qiymati berilmoqda.
+
+- `b = [232, 54545];`
+
+  - `b` massivining qiymati o‘zgartirilmoqda, yangi raqamlar to‘plami (`[232, 54545]`) berilmoqda. Bu to‘g‘ri, chunki `b` faqat `number` tipidagi massiv bo‘lishi kerak.
+
+- `b = ["sdf", true];`
+  - Xato! `b` faqat raqamlar massivini qabul qilishi kerak, ammo bu yerda string (`"sdf"`) va boolean (`true`) qiymatlar berilgan.
+
+```ts
+let c: Array<number> = [1, 2, 3, 4];
+c = ["str1", "str2"];
+c = [12, 34, 54];
+```
+
+- `let c: Array<number> = [1, 2, 3, 4];`
+
+  - `c` nomli o‘zgaruvchi e'lon qilinmoqda va unga faqat sonlarni (`number`) saqlovchi massiv (`Array<number>`) qiymati berilmoqda.
+
+- `c = ["str1", "str2"];`
+
+  - **Xato!** `c` faqat `number` tipidagi qiymatlarni saqlashi kerak, ammo bu yerda string (`"str1"`, `"str2"`) massiv berilgan.
+
+- `c = [12, 34, 54];`
+  - To‘g‘ri! `c` massivining yangi qiymati ham faqat sonlardan iborat bo‘lgani uchun hech qanday xato yuzaga kelmaydi.
+
+```ts
+let d: (number | string)[] = [12, 45, "str1", "str2"];
+```
+
+- `let d: (number | string)[] = [12, 45, "str1", "str2"];`
+  - `d` nomli o‘zgaruvchi e'lon qilinmoqda va unga **faqat raqam (`number`) yoki satr (`string`) tipidagi qiymatlar** saqlovchi massiv tayinlanmoqda.
+  - `[12, 45, "str1", "str2"]` qiymati **to‘g‘ri**, chunki u faqat `number` va `string` tipidagi elementlardan iborat.
+
+```ts
+let e: Array<boolean | number> = [true, false, 122, 32, 5];
+e = [true, false, 34, "str1", "str2"];
+```
+
+- `let e: Array<boolean | number> = [true, false, 122, 32, 5];`
+
+  - `e` nomli o‘zgaruvchi e'lon qilinmoqda va unga **faqat `boolean` yoki `number`** tipidagi qiymatlarni saqlovchi massiv tayinlanmoqda.
+  - `[true, false, 122, 32, 5]` qiymati **to‘g‘ri**, chunki barcha elementlar `boolean` (`true`, `false`) yoki `number` (`122`, `32`, `5`) tipida.
+
+- `e = [true, false, 34, "str1", "str2"];`
+  - **Xato!** `e` faqat `boolean` yoki `number` tipidagi qiymatlarni qabul qilishi kerak, lekin bu yerda `"str1"` va `"str2"` string (`string`) tipida bo‘lgani uchun **TypeScript xatolik chiqaradi**.
+
+---
+
+## **5-Dars Massivlar(arrays, tuples, enums) (2-qism)**
+
+```ts
+let f: [number, string];
+
+f = [20, "Muhriddin"];
+f = ["Muhriddin", 20];
+f = [20];
+```
+
+- `let f: [number, string];`
+
+  - `f` nomli o‘zgaruvchi e'lon qilinmoqda va unga **aniq tartibdagi tuzilma** (`tuple`) tayinlanmoqda.
+  - U **faqat ikkita elementdan** iborat bo‘lishi kerak:
+    1. **Birinchi element** — `number`
+    2. **Ikkinchi element** — `string`
+
+- `f = [20, "Muhriddin"];` ✅
+
+  - **To‘g‘ri!** `f` massivining birinchi elementi `number`, ikkinchi elementi esa `string`, shuning uchun hech qanday xato yo‘q.
+
+- `f = ["Muhriddin", 20];` ❌
+
+  - **Xato!** `f` birinchi element sifatida `number` va ikkinchi element sifatida `string` qabul qilishi kerak, lekin bu yerda **teskari tartibda** berilgan (`string, number`).
+
+- `f = [20];` ❌
+  - **Xato!** `f` **ikkita elementdan** iborat bo‘lishi shart, lekin bu yerda faqat bitta (`number`) element berilgan.
+
+```ts
+let g: [number, [number, string]];
+g = [123, [12, "str1"]];
+```
+
+- `let g: [number, [number, string]];`
+
+  - `g` nomli **tuples (aniq tartibdagi massiv)** e'lon qilinmoqda.
+  - U **ikkita asosiy elementdan** iborat bo‘lishi kerak:
+    1. **Birinchi element** — `number`
+    2. **Ikkinchi element** — **yana bitta tuple** (`[number, string]`)
+
+- `g = [123, [12, "str1"]];` ✅
+  - **To‘g‘ri!**
+    - **Birinchi element** `123` (`number`) — to‘g‘ri.
+    - **Ikkinchi element** `[12, "str1"]` (`[number, string]`) — to‘g‘ri.
+    - Strukturaga mos kelgani uchun hech qanday xato bermaydi.
