@@ -371,3 +371,19 @@ g = [123, [12, "str1"]];
     - **Birinchi element** `123` (`number`) — to‘g‘ri.
     - **Ikkinchi element** `[12, "str1"]` (`[number, string]`) — to‘g‘ri.
     - Strukturaga mos kelgani uchun hech qanday xato bermaydi.
+
+---
+
+## **5-Dars Massivlar(arrays, tuples, enums) (3-qism)**
+
+```ts
+enum Gender {
+  Male,
+  Female,
+}
+console.log(Gender.Male, Gender.Female);
+```
+
+- **`enum`** — bu TypeScript'da **enumeratsiya** (sanab o'tish) tushunchasini ifodalovchi tur. U bir nechta **o'zaro bog'liq qiymatlarni** nom bilan belgilash uchun ishlatiladi.
+- **`Gender`** — bu `enum` uchun tanlangan nom, u erkak (`Male`) va ayol (`Female`) qiymatlarini o'z ichiga oladi.
+- **`Male`** va **`Female`** avtomatik ravishda `0` va `1` raqamli qiymatlarni oladi (agar qo'lda qiymat berilmagan bo'lsa).
